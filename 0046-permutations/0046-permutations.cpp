@@ -1,27 +1,20 @@
 class Solution {
 public:
-    void getResult(vector<vector<int>> &res,vector<int> &arr,vector<bool> &visited,vector<int> &nums){
-        if(nums.size() == arr.size()){
-            res.push_back(arr);
+    void getResult(vector<vector<int>> &res,vector<int> &nums,int ind){
+        if(ind == nums.size()){
+            res.push_back(nums);
             return;
         }    
-        for(int i=0; i<nums.size(); i++){
-            if(!visited[i]){
-                arr.push_back(nums[i]);
-                visited[i] = true;
-                getResult(res,arr,visited,nums);
-                visited[i] = false;
-                arr.pop_back();
-            }
+        for(int i=ind; i<nums.size(); i++){
+            swap(nums[i],nums[ind]);
+            getResult(res,nums,ind+1);
+            swap(nums[i],nums[ind]);
         }
     }
     
     vector<vector<int>> permute(vector<int>& nums) {
-        int n = nums.size();
         vector<vector<int>> res;
-        vector<int> arr;
-        vector<bool> visited(n,false);
-        getResult(res,arr,visited,nums);
+        getResult(res,nums,0);
         return res;
     }
 };
