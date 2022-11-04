@@ -31,14 +31,18 @@ public:
         }
         return true;
     }
-    void solve(int col,vector<vector<int>> &board,vector<vector<int>> &ans,int n,vector<int> &tmp){
-        if(col == n){
-            
-            // for(int i=0; i<n; i++){
-            //     for(int j=0; j<n; j++){
-            //         if(board[i][j] > 0)tmp.push_back(j+1);
-            //     }
-            // }
+    void solve(int col,vector<vector<int>> &board,vector<vector<int>> &ans,int n){
+        //static bool flag=true;
+        if(col == n ){
+            //flag=false;
+            vector<int> tmp;
+            for(int i=0; i<n; i++){
+                for(int j=0; j<n; j++){
+                    //cout<<board[i][j]<<" ";
+                    if(board[j][i] > 0)tmp.push_back(j+1);
+                }
+                // cout<<endl;
+            }
             ans.push_back(tmp);
             return;
         }
@@ -46,18 +50,16 @@ public:
             if(isValid(row,col,board,n)){
                 
                 board[row][col] = 1;
-                tmp.push_back(row+1);
-                solve(col+1,board,ans,n,tmp);
+                solve(col+1,board,ans,n);
                 board[row][col] = 0;
-                tmp.pop_back();
             }
         }
     }
     vector<vector<int>> nQueen(int n) {
         vector<vector<int>> ans;
         vector<vector<int>> board(n,vector<int> (n,0));
-        vector<int> tmp;
-        solve(0,board,ans,n,tmp);
+
+        solve(0,board,ans,n);
         //vector<int> temp;
         //temp = ans.pop_back()
         //reverse(ans.begin(),ans.end());
